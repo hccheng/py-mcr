@@ -1,0 +1,91 @@
+## New stuff
+# All even pungs
+m 222b 444c 666d h 88b88c w 8c
+# All Fives
+m 345d h 345c345b567d5c w 5c
+# All Green
+m 234b 222b 666b h 88bDgDg w Dg
+# All Green
+m 234b 222b 666b h 88b33b w 3b
+# All Honors
+h WeesswwnnDrrggw w Dw
+# All Terminals
+h 1199b1199c1199d9d w 9d
+# All Terminals
+m 111d 999d 111c 999b h 1b w 1b
+# All Terminals and Honors
+m 111c 999c 111b 999b h Dr w Dr
+# Big Four Winds
+h WeeeWsssWwwwWnnb4b4 w Wn rw Ws sw We
+# Big Four Winds
+h WeeeWsssWwwwWnnb4b4 w 4b rw Ws sw We
+# Big Three Dragons
+m Drrr Dggg Dwww h c44d99 w d9
+# Big Three Dragons
+m Drrr Dggg Dwww h c44c78 w c9
+# Edge Wait
+m b1b2b3 m b4b4b4b4 c 8888b h b1b2b5b5 w b3 kong_replacement
+# Four Kongs
+m 2222b m 5555c m 7777c m 4444d h Dr w Dr
+# Four Kongs
+c 2222b c 5555c c 7777c c 4444d h Dr w Dr
+# Four Pure Shifted Chows
+m 1c2c3c h 2c3c4c3c4c5c4c5c6csW w sW
+# Four Pure Shifted Pungs
+h 111d222d333d444dsW w Ws
+# Fully Concealed
+h 456d456b456c456c5c w 5c self_draw
+# Fully Concealed
+h 345c456c555d555b5c w 5c self_draw
+# Fully Concealed
+h 1c2c3c2c3c4c3c4c5c4c5c6csW w sW self_draw
+# Last Tile
+m b5b5b5 m b1b2b3 m c2c2c2 h d7d7d7d9 w d8 v d8d8d8
+# Robbing the Kong
+m b5b5b5 m b1b2b3 m c2c2c2 h d7d7d7d9 w d8 robbing
+# Robbing the Kong
+m b5b5b5 m b1b2b3 m Weee h d7d7d7d9 w d8 robbing
+# Knitted Straight
+h 147b258c369d55d55b w 5b
+# Last Tile Claim
+m d1d2d3 m b4b4b4 m c7c8c9 h DrDrd3d4 w d5 last_turn
+# Last Tile Draw
+m d1d2d3 m b4b4b4 m c7c8c9 h DrDrd3d4 w d5 self_draw last_turn
+# Little Four Winds
+m Weee Wwww h WnnnWssb2b4 w b3
+# Little Four Winds
+m Weee Wwww h WnnnWssDrr w Dr
+# Little Three Dragons
+m Drrr Dggg h Dwwc9c9c9d2d3 w d4
+# Lower Tiles
+m 11b m 222c 333b h d2d2d3d3 w d3
+# Melded Hand
+m 123b m 234c m Dggg m d3d4d5 h b9 w b9
+# Mixed Shifted Pungs
+m 222b m 333c m 678b h d4d4b9b9 w d4
+# Mixed Straight
+m 123b m 456c m 555b h d7d8b9b9 w d9
+# Nine Gates
+h 1112345678999c w 5c
+# Out with Replacement
+m b1b2b3 c b4b4b4b4 c 8888b h b1b2b5b5 w b3 kong_replacement
+# Out with Replacement
+m b1b2b3 m b4b4b4b4 m 8888b h b1b2b5b5 w b3 kong_replacement
+# Out with Replacement
+m b1b2b3 m b4b4b4 m 8888b h b1b2b5b5 w b3 kong_replacement
+# Pure Straight
+m 123d m 456d m 456d h d7d8WsWs w d9
+# Prevalent Wind
+m 123b m 456c m Wnnn h d7d8b9b9 w d9 rw Wn
+# Quadruple Chow
+m c1c2c3 c1c2c3 h c1c2c3c2c3WsWs w c1
+# Reversible Tiles
+h 345d345d456b45b55b w 6b
+# Seat Wind
+m 123b m 456c m Wnnn h d7d8b9b9 w d9 sw Wn
+# Triple Pung
+h 111b111c111d678b5c w 5c
+# Three Kongs
+m b2222 c c2c2c2c2 d2d2d2d2 h b7b8WeWe w b6
+# Three Suited Terminal Chows
+m 123d m 789d m 123b h b7b8c5c5 w b9

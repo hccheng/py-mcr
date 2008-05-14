@@ -1,0 +1,102 @@
+m b1b2b3 m b2b3b4 h b3b4b5b6b8b9b9 w b7 f F3F5F6
+m b1b2b3 m b4b5b6 c 9999b h b1b1b5b6 w b7 f F3F5F6 v b7b7b7
+m b444 m b222 c 8888b h 666c6b w b6 f F3F5F6
+m b444 m b222 h 888b666c6b w b6 f F3F5F6
+h 456d456b456c456c5c w 5c f F3F5F6
+h 345c456c555d555b5c w 5c f F3F5F6
+h 234b234b666b888bDg w Dg
+h DrrrDwwwWeeeWssWnn w Ws f F3F5F6
+m Drrr Dwww Weee Wsss h Wn w Wn
+m b1b2b3 m b4b5b6 c 9999b h b1b1b5b6 w b7 f F3F5F6 v b7b7b7
+m b111 m b222 c 9999b h b3334 w b4 f F3F5F6 v b7b7b7
+m b2b3b4 m d4d5d6 c 8888b h b2b2c3c5 w c4 f F3F5F6
+h c1c1c1b1b1b1c9c9c9b9b9b9d1 w d1 f F3F5F6
+m c1c1c1 h b1b1b1c9c9c9b9b9d1d1 w b9
+h WeWeWec1c1c1d9d9d9b9b9b9Dr w Dr f F3F5F6
+m 123b m 234c m Dggg h d3d5WeWe w d4 f F3F5F6 v d8d8d8
+m 123b m 234c m 555c h d3d5WeWe w d4 f F3F5F6 v d8d8d8
+h WeeeWsssWwwwWnnnDr w Dr rw We sw Wn f F3F5F6
+m Weee Wsss Wwww Wnnn h Dr w Dr rw We sw Wn
+h DrrrDgggDwwwc111d9 w d9 f F3F5F6
+m Weee m Wnnn m c7c8c9 h WsWsd3d3 w Ws f F3F5F6
+m b1b2b3 m b4b4b4b4 c 9999b h b1b3b8b8 w b2 f F3F5F6
+h b1b1b1c1c1c1b3b4b5b6b8b9b9 w b7 f F3F5F6
+m Weee m b4b4b4b4 c 9999b h b1b1b5b6 w b7 f F3F5F6 v b7b7b7 sw We
+m b1b1b1 m c1c1c1 h b3b4b5b6b8b9b9 w b7 f F3F5F6
+m Drrr m b4b4b4b4 c 9999b h b1b1b5b6 w b7 f F3F5F6 v b7b7b7
+m b1b2b3 m b4b4b4b4 c 9999b h b1b2b5b5 w b3 f F3F5F6
+m d1d2d3 m b4b4b4 m c7c8c9 h DrDrd3d4 w d5 f F3F5F6
+m b1b2b3 m b4b4b4b4 c 9999b h b1b1b5b6 w b7 f F3F5F6 v b7b7b7
+h b2b2b2d3d3d3c4c4c4d2d2d2c3 w c3 f F3F5F6
+m 2222b m 5555c m 7777d c Weeee h Dr w Dr f F3F5F6
+h 1c2c3c2c3c4c3c4c5c4c5c6c1c w 1c f F3F5F6
+h 111d222d333d444d1b w b1 f F3F5F6
+m b1b2b3 m b4b5b6 c 9999b h b1b1b5b6 w b7 f F3F5F6 v b7b7b7
+m b1b2b3 m b4b5b6 c Weeee h b1b1b5b6 w b7 f F3F5F6 v b7b7b7
+h b1b1b1c1c1c1b3b4b5b6b8b9b9 w b7 f F3F5F6 self_draw
+h b1b7c2c5c8d3d6WeWsWwWnDwDg w Dr f F3F5F6
+h b1b4b7c2c5c8d3d6WeWsWwDwDg w Dr f F3F5F6
+m b1b2b3 m b4b5b6 c Weeee h b1b1b5b6 w b7 f F3F5F6 v b7b7b7
+m b1b2b3 m b4b5b6 c 9999b h b1b1b5b6 w b7 f F3F5F6 v b7b7b7
+m Weee h d1d4d7c2c5c8b3b6b9Ws w Ws f F3F5F6
+m Weee m b1b2b3 m c1c1c1 h d7d9b9b9 w d8 f F3F5F6 v d8d8d8
+m Weee m b4b4b4b4 c 9999b c b1b1b1b1 h b6 w b6 f F3F5F6 v b7b7b7 sw We last_turn
+m Weee m b4b4b4b4 c 9999b c b1b1b1b1 h b6 w b6 f F3F5F6 v b7b7b7 sw We self_draw last_turn
+h b1b4b7c2c5c8d3d6WeWsWwDwDg w Dr f F3F5F6
+h b1b4b7c2c5c8d3d6d9WeWsDwDg w Dr f F3F5F6
+h b1b7c2c5c8d3d6WeWsWwWnDwDg w Dr f F3F5F6
+h WeeeWwwwWnnnWssb1b2 w b3 f F3F5F6
+h DrrrDgggDwwd9d9d9d1d1 w d1 f F3F5F6
+m Drrr h DgggDwwd9d9d9d1d1 w d1 f F3F5F6
+m 222b m 333c 444b h d1234 w d4 f F3F5F6
+m 111b m 222c 333b h d1233 w d3 f F3F5F6
+m 123b m 234c m Dggg m d3d4d5 h b9 w b9 f F3F5F6 v d8d8d8
+m b1b2b3 m b4b4b4b4 c 9999b h b1b1b5b6 w b7 f F3F5F6 v b7b7b7
+m 444b m 555c 666b h d4566 w d6 f F3F5F6
+m b123 m c123 c 9999b h b1156 w b7 f F356 v b777
+m 123b m 234c m Dggg h d3d5b9b9 w d4 f F3F5F6 v d8d8d8
+m 222b m 333c m Dggg h d4d4b9b9 w d4 f F3F5F6 v d8d8d8
+m 123b m 456c m Dggg h d7d8b9b9 w d9 f F3F5F6 v d8d8d8
+m 123b m 123c m Dggg h d1d2b9b9 w d3 f F3F5F6 v d8d8d8
+h b1112345678999 w b7
+m b1b2b3 m b4b4b4b4 c 9999b h b1b1b5b6 w b7 f F3F5F6 v b7b7b7
+m b1b2b3 m b4b4b4b4 c 9999c h b1b1b5b6 w b7 f F3F5F6 v b7b7b7
+m Weee m b4b4b4b4 c 9999b c b1b1b1b1 h b6 w b6 f F3F5F6 v b7b7b7 sw We kong_replacement
+m Weee m b1b2b3 m c1c1c1 h d7d8d9b9 w b9 f F3F5F6
+m c2c3c4 m b1b2b3 m c1c1c1 h d7d8d9b9 w b9 f F3F5F6
+m Weee m b4b4b4b4 c 9999b h b1b1b5b6 w b7 f F3F5F6 v b7b7b7 rw We
+m Weee m Drrr h b999b11b56 w b7 f F3F5F6 v b7b7b7
+m b123 m b123 c 9999b h b1156 w b7 f F356 v b777
+m 123d m 234d m Dggg h d3d5b9b9 w d4 f F3F5F6 v d8d8d8
+m 123c m 345c m Dggg h c5c7b9b9 w c6 f F3F5F6 v d8d8d8
+m 111b m 222b m Dggg h b3b3b9b9 w b3 f F3F5F6 v d8d8d8
+m 123d m 456d m 456b h d7d8b9b9 w d9 f F3F5F6 v d8d8d8
+m 123b h 1235577889b w 9b f F3F5F6
+m b123 m b123 h b12356c88 w b7 f F356 v
+h c1c2c3c1c2c3c1c2c3c1c2c3c4 w c4 f F3F5F6
+m c1c2c3 c1c2c3 h c1c2c3c2c3b8b8 w c1
+m d1d2d3 m d2d3d4 h d3d4d5b9b9b9Dw w Dw f F3F5F6
+m b1b2b3 h d2d4b9b9b9b8b8 w d3 robbing
+m Weee m b4b4b4b4 c 9999b h b1b1b5b6 w b7 f F3F5F6 v b7b7b7 sw We
+m b1b2b3 m b4b4b4b4 c 9999b h b1b1b5b6 w b7 f F3F5F6 v b7b7b7
+m b1b2b3 m b4b4b4b4 c 9999b h b1b1b5b6 w b7 f F3F5F6 v b7b7b7 self_draw
+h c3c3c3c3b2b2b5b5b6b6c8c8b7 w b7 f F3F5F6 v d8d8d8
+h 11c22c33c44c55c66c7c w 7c
+m b1b2b3 m b4b5b6 c 9999b h b1b1b5b6 w b7 f F3F5F6 v b7b7b7
+m b1b2b3 m c4c5c6 c 9999b h b1b1b5b6 w b7 f F3F5F6 v b7b7b7
+m b1b2b3 m b4b4b4b4 c 9999b h b1b2b3b8 w b8 f F3F5F6
+h 19d19b19cDrgwWeswn w Wn
+c b1111 h c1c1c1d1d1d1b6b8b9b9 w b7 f F3F5F6
+m 2222c m 3333c m 4444c h b2b2c5c5 w c5 f F3F5F6
+m 123d m 789d m 123b h b7b8b9c5 w c5 f F3F5F6
+h b1b1b1c1c1c1b1b2b3b6b8b9b9 w b7 f F3F5F6
+m b1b1b1 m c1c1c1c1 h d1d1d1b6b8b9b9 w b7 f F3F5F6
+m Weee m b4b4b4b4 c 9999b c b1b1b1b1 h b6 w b6 f F3F5F6 v b7b7b7 sw We
+h b1b1b1c1c1c1b3b4b5b6b8b9b9 w b7 f F3F5F6
+m Drrr m b1b2b3 m Dggg h d7d9b9b9 w d8 f F3F5F6 v d8d8d8
+m Weee m b4b4b4b4 m 9999b h b1b1b5b6 w b7 f F3F5F6 v b7b7b7 sw We
+m b1b2b3 m b7b8b9 h b999b11b56 w b7 f F3F5F6
+m b1b2b3 m b7b8b9 h b999b567We w We
+m 666b m 888c 999b h d6789 w d6 f F3F5F6
+m 777b m 888c 999b h d7899 w d9 f F3F5F6
+m 789b m 789c 789d h d789d9 w d9
