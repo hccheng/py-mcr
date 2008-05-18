@@ -37,7 +37,8 @@ class myHandler(BaseHTTPRequestHandler):
                 self.wfile.write(mahtml.getAnswerOrError(in_string))
 
     def printHelp(self):
-        fragment = H1("Help") + P("No situation given") + P(A("try this", href="/h 1233b w 3b"))
+        fragment = H1("Help") + P("No situation given") + P(A("try this", href='/h 1234564567899b w 9b'))
+        fragment = H1("Help") + P("No situation given") + P(A("Crazy", href='/c Weeee Wssss Wwwww Wnnnn h Dr w Dr'))
         fragment += FORM(INPUT(type="text", name="sit")+INPUT(type="submit", name="Go", value="Go"), 
                          method='get', action='form')
         self.wfile.write(str(fragment))
