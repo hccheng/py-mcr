@@ -58,7 +58,7 @@ def group_knitted_straight_and_normal(ts):
     """
     knitted straight 
     >>> group_knitted_straight_and_normal(make_tile_list("b1b4b7c2c5c8d3d6d9"))
-    [[('b1', 'b4', 'b7', 'c2', 'c5', 'c8', 'd3', 'd6', 'd9')]]
+    [[('b1', 'c2', 'd3', 'b4', 'c5', 'd6', 'b7', 'c8', 'd9')]]
     >>> group_knitted_straight_and_normal(make_tile_list("b1c4b7c2c5c8d3d6d9"))
     []
     >>> group_knitted_straight_and_normal(make_tile_list("b1b7c2c5c8d3d6d9"))
@@ -66,7 +66,7 @@ def group_knitted_straight_and_normal(ts):
     >>> group_knitted_straight_and_normal(make_tile_list("b1b2b3b4b5b6b7b8b9"))
     []
     >>> group_knitted_straight_and_normal(make_tile_list("b1b4b7d2d5d8c3c6c9WeWe"))
-    [[('b1', 'b4', 'b7', 'd2', 'd5', 'd8', 'c3', 'c6', 'c9'), ('We', 'We')]]
+    [[('b1', 'd2', 'c3', 'b4', 'd5', 'c6', 'b7', 'd8', 'c9'), ('We', 'We')]]
     """
 
     knitted = get_knitted_straight_tiles(ts)
@@ -79,7 +79,7 @@ def group_knitted_straight_and_normal(ts):
     if len(rest_alternatives) == 0:
         return []
     else:
-        return [[knitted] + rest_alternatives[0]]
+        return [[tuple(knitted)] + rest_alternatives[0]]
 
 def all_triplets_pos(ts):
     """
@@ -185,9 +185,9 @@ def group_tiles(tiles):
 
     9 gates
     >>> group_tiles(make_tile_list("b1b1b1b2b3b4b5b6b7b8b9b9b9b5"))
-    [[('b1', 'b1', 'b1'), ('b2', 'b3', 'b4'), ('b5', 'b5'), ('b6', 'b7', 'b8'), ('b9', 'b9', 'b9')], [('b1', 'b1', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b9', 'b9'), ('b5',)]]
+    [[('b1', 'b1', 'b1'), ('b2', 'b3', 'b4'), ('b5', 'b5'), ('b6', 'b7', 'b8'), ('b9', 'b9', 'b9')]]
     >>> group_tiles(['b1', 'b1', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b9', 'b9', 'b5'])
-    [[('b1', 'b1', 'b1'), ('b2', 'b3', 'b4'), ('b5', 'b5'), ('b6', 'b7', 'b8'), ('b9', 'b9', 'b9')], [('b1', 'b1', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b9', 'b9'), ('b5',)]]
+    [[('b1', 'b1', 'b1'), ('b2', 'b3', 'b4'), ('b5', 'b5'), ('b6', 'b7', 'b8'), ('b9', 'b9', 'b9')]]
     
     
     almost 9 gates, but one tile doesn't match
@@ -216,12 +216,11 @@ def group_tiles(tiles):
     
     knitted straight 
     >>> group_tiles(make_tile_list("b1b4b7c2c5c8d3d6d9"))
-    [[('b1', 'b4', 'b7', 'c2', 'c5', 'c8', 'd3', 'd6', 'd9')]]
+    [[('b1', 'c2', 'd3', 'b4', 'c5', 'd6', 'b7', 'c8', 'd9')]]
     
 
     """
     candidates = []
-    #ts = make_tile_list(tiles)
     ts = list(tiles)
     ts.sort()
     candidates.extend(group_normal(ts))

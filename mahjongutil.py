@@ -182,7 +182,7 @@ def get_knitted_straight_tiles(ts):
                make_tile_list("147d258b369c"), 
                make_tile_list("147d258c369b")]:
         if set(ts).issuperset(set(ks)):
-            return list(ks)
+            return ks
         
 def make_tile_list(s):
     """

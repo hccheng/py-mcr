@@ -2,6 +2,7 @@ from informat import *
 from identifan import *
 from fanpoints import *
 from fanimplications import *
+from mahjongutil import *
 import pprint
 
 def remove_implied(selected, point_fans):
@@ -39,7 +40,49 @@ def make_one_fan_per_line(fans):
                   for fan, sets in fans.items()
                   for s in sets]
     point_fans.sort()
+    point_fans.reverse()
     return point_fans
+
+def get_implied(name, sets_used, scoring_elements):
+    implied = []
+    implied_names = get_implied_map()[name]
+    for i, (p, checked_name, checked_sets) in enumerate(scoring_elements):
+        if checked_name in implied_names:
+            if set(checked_sets).issubset(set(sets_used)):
+                implied.append(i)
+    return implied
+
+def get_identical(name, sets_used, scoring_elements):
+    identical = []
+    for i, (p, checked_name, checked_sets) in enumerate(scoring_elements):
+        if (checked_name == name and 
+            checked_sets != sets_used and 
+            len(set(checked_sets).intersection(set(sets_used))) != 0):
+            identical.append(i)
+    return identical
+
+def get_exceptional_exclusions(name, sets_used, scoring_elements):
+    excluded = []
+    waits = ['Closed Wait', 'Edge Wait', 'Single Wait']
+    for i, (p, checked_name, checked_sets) in enumerate(scoring_elements):
+        # Not needed, since the waits are defined like waiting for a pair, or tile in chow
+        #if name == "Thirteen Orphans" and checked_name == "Single Wait":
+        #    excluded.append(i)        
+        if name in waits and checked_name in waits and name != checked_name: 
+            excluded.append(i)        
+    return excluded
+
+def account_once_applies(sets_used, sets_in_hand):
+    tile_sets = [sets_in_hand[i][1] for i in sets_used]
+    return all(is_sorted_chow(s) for s in tile_sets)
+
+def add_exclusion_columns(se, sets_in_hand): 
+    return [[p, n, sets, 
+             get_implied(n, sets, se), 
+             get_identical(n, sets, se), 
+             get_exceptional_exclusions(n, sets, se), 
+             account_once_applies(sets, sets_in_hand)] 
+             for p, n, sets in se]
 
 def option_max_points(option):
     fans = get_fans(option)

@@ -4,6 +4,7 @@ from os import curdir, sep
 import urllib
 import mahtml
 import re
+from HTMLTags import *
 
 import time
 
@@ -21,12 +22,25 @@ class myHandler(BaseHTTPRequestHandler):
             f.close()
         else:
             self.printCustomHTTPResponse(200)
-            query_string = urllib.unquote(self.path)[1:]
-            self.wfile.write(mahtml.getAnswerOrError(query_string))
-        #self.wfile.write("<html>\n<head><title>Yay! </title></head><body>\n")
-        #self.wfile.write("<p>GET string: " + self.path + "</p>" )
-        #self.printBrowserHeaders()
-        #self.wfile.write("</body>\n</html>\n")
+            query_string = urllib.unquote_plus(self.path)
+            path, query = urllib.splitquery(query_string)
+            print query_string, path, query
+            parameters = dict(urllib.splitvalue(v) for v in query.split("&")) if query else {}
+            print parameters
+            if path == '/':
+                self.printHelp()
+            else:
+                if path == '/form':
+                    in_string = parameters['sit']
+                else:
+                    in_string = query_string[1:]
+                self.wfile.write(mahtml.getAnswerOrError(in_string))
+
+    def printHelp(self):
+        fragment = H1("Help") + P("No situation given") + P(A("try this", href="/h 1233b w 3b"))
+        fragment += FORM(INPUT(type="text", name="sit")+INPUT(type="submit", name="Go", value="Go"), 
+                         method='get', action='form')
+        self.wfile.write(str(fragment))
 
     def printBrowserHeaders(self):
         headers = self.headers.dict
@@ -39,7 +53,6 @@ class myHandler(BaseHTTPRequestHandler):
     def printCustomHTTPResponse(self, respcode):
         self.send_response(respcode)
         self.send_header("Content-Type", "text/html")
-        #self.send_header("Server", "myHandler")
         self.end_headers()
 
     def log_request(self, code='-', size='-'):
@@ -51,7 +64,7 @@ def main():
     try:
         port = 8080
         server = HTTPServer(('', port), myHandler)
-        print 'started httpserver on port %d' % port
+        print 'Browse to http://localhost:%d/' % port
         while True:
             server.handle_request()
         #server.serve_forever()

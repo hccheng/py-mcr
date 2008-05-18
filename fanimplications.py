@@ -102,7 +102,8 @@ implied = \
                       'All Terminals and Honors',
                       'Concealed Hand',
                       'Outside Hand',
-                      'Single Wait'],
+                      #'Single Wait'
+                      ],
  'Three Concealed Pungs': ['Two Concealed Pungs'],
  'Three Kongs': ['Melded Kong', 'Two Melded Kongs'],
  'Three Suited Terminal Chows': ['All Chows',

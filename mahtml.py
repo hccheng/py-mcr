@@ -13,6 +13,17 @@ def getTileImages(ts):
         fragment += IMG(src='tiles/%s.png' % t)
     return fragment
 
+def makeTable(header, cells):
+    fragment = TR(sum((TH(h) for h in header), TEXT()))
+    for r in cells:
+        fragment += TR(sum((TD(c) for c in r), TEXT()))
+    return TABLE(fragment)
+
+def makeIdTable(header, cells):
+    fragment = TR(sum((TH(h) for h in header), TH('Id')))
+    for i, r in enumerate(cells):
+        fragment += TR(sum((TD(c) for c in r), TD(str(i))))
+    return TABLE(fragment)
 
 def getSituationFragment(sit):
     fragment = TEXT()
@@ -67,29 +78,25 @@ def getAnswer(in_line):
     sit = parse_command_line(in_line)
     normal_form_in_line = make_normal_inline(sit)
     normal_form_in_fragment = H3("Normal form situation string")+TEXT(normal_form_in_line)
-    situation_fragment = H3("Situation")+getSituationFragment(sit) #+PRE(pprint.pformat(sit))
+    situation_fragment = H3("Situation")+getSituationFragment(sit) 
     wait_fragment = H3("Wait Analysis")+getWaitAnalysisFragment(sit)
     opts = get_options(sit)
-    wait_fragment = H3("Hand arrangements")+TEXT('Number of possible hand arrangements: %d' % len(opts))
+    arrangement_count_fragment = (H3("Hand arrangements") +
+                                  TEXT('Number of possible hand arrangements: %d' % len(opts)))
     option_fragments = []
-    for option in opts:
-        this_fragment = getOptionFragment(option)
-        fans = get_fans(option)
-        point_fans = make_one_fan_per_line(fans)
-        point_fans.reverse()
-        this_fragment += PRE(pprint.pformat(point_fans))
-        option_fragments.append(LI(this_fragment))
-    """
     for i, option in enumerate(opts):
+        this_fragment = H4('Grouping %d' % (i+1)) + getOptionFragment(option)
         fans = get_fans(option)
-        r.append("Fans:\n %s" % pprint.pformat(fans))
         point_fans = make_one_fan_per_line(fans)
-        point_fans.reverse()
-        r.append("One per line:\n %s" % pprint.pformat(point_fans))
+        sets = option['sets']
+        exclusion_fans = add_exclusion_columns(point_fans, sets)
+        #this_fragment += PRE(pprint.pformat(point_fans))
+        this_fragment += makeIdTable(["Score", "Name", "Sets", 
+                                      "Implied", "Identical", "Exceptions", "Account Once"],
+                                      exclusion_fans)
+        option_fragments.append(this_fragment)
 
-    return "\n".join(r)
-    """
-    return normal_form_in_fragment + situation_fragment + wait_fragment + OL(Sum(option_fragments))
+    return normal_form_in_fragment + situation_fragment + wait_fragment + arrangement_count_fragment + sum(option_fragments, TEXT())
 
 def main():
     print getAnswerOrError(sys.argv[1] if len(sys.argv) > 1 else "")

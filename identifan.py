@@ -232,7 +232,7 @@ def get_pung_of_terminals_or_honors(sit):
 def get_melded_kong(sit):
     """
     >>> get_melded_kong( get_one_option('m b1b2b3 m b4b4b4b4 c 9999b h b1b1b5b6 w b7 f F3F5F6 v b7b7b7') )
-    ('Melded Kong', [[1]])
+    ('Melded Kong', [[1], [2]])
     """
     sets = get_only_sets(sit['sets'])
     poss = find_single_sets(sets, lambda s: is_kong(s))

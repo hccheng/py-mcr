@@ -36,7 +36,7 @@ def main():
         f = open(file_name)
         c = c + do_file(f, always_also)
 
-    always_also['Thirteen Orphans'].append('Single Wait')
+    #always_also['Thirteen Orphans'].append('Single Wait')
 
     pprint.pprint(always_also)
 
