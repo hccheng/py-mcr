@@ -13,7 +13,8 @@ class myHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         if re.match("/tiles/[bcdWD][123456789eswnrgw]\.png", self.path):
             self.send_response(200)
-            self.send_header("Content-Type", "image/png")
+            self.send_header('Content-Type', 'image/png')
+            self.send_header('Cache-Control', 'max-age=86400, must-revalidate')
             self.end_headers()
             filename = curdir + sep + self.path
             print filename
@@ -21,7 +22,7 @@ class myHandler(BaseHTTPRequestHandler):
             self.wfile.write(f.read())
             f.close()
         else:
-            self.printCustomHTTPResponse(200)
+            self.printCustomTextHTTPResponse(200)
             query_string = urllib.unquote_plus(self.path)
             path, query = urllib.splitquery(query_string)
             print query_string, path, query
@@ -51,9 +52,10 @@ class myHandler(BaseHTTPRequestHandler):
             self.wfile.write(value + "\n</li>\n")
         self.wfile.write("</ul>\n")
 
-    def printCustomHTTPResponse(self, respcode):
+    def printCustomTextHTTPResponse(self, respcode):
         self.send_response(respcode)
         self.send_header("Content-Type", "text/html")
+        self.send_header('Cache-Control', 'no-cache')
         self.end_headers()
 
     def log_request(self, code='-', size='-'):
