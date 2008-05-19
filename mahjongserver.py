@@ -42,6 +42,9 @@ class myHandler(BaseHTTPRequestHandler):
         fragment += P(A("Crazy", href='/c Weeee Wssss Wwwww Wnnnn h Dr w Dr'))
         fragment += FORM(INPUT(type="text", name="sit")+INPUT(type="submit", name="Go", value="Go"), 
                          method='get', action='form')
+        fragment += PRE("""
+The tiles:1b - 9b Bamboo1c - 9c Characters1d - 9d DotsWe Ws Ww Wn - The winds (east, south, west, north)Dr Dg Dw - The Dragons (Red, Green, White)F1 - F8 - FlowersThe tile groups:h - Hand (The tiles in the player's hand, just before the hu)w - Winning tilec - Concealed (for concealed kongs)m - Melded sets (chows, pungs, kongs)f - Flowersv - Visible tiles in discard piles and other players melded sets (used to deduce Last Tile)rw - Round wind (rw We - East round)sw - Seat wind (sw Wn - Seat wind West)Modifiersself_draw - Winning tile was self drawnlast_turn - Winning on the last turn (used to deduce Last Tile Draw and Last Tile Claim)kong_replacement - for Out with Replacementrobbing - for Robbing the Kong
+        """)
         self.wfile.write(str(fragment))
 
     def printBrowserHeaders(self):
