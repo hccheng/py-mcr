@@ -71,8 +71,33 @@ def getAnswerOrError(in_line):
         f = H3("Error")+TEXT(str(e))
     return str(DIV(indata_fragment+f))
 
-def getOptionFragment(option):
-    return getSituationFragment(option)
+def optimal_claimed_fans(exclusion_fans):
+    NOT_CLAIMED = 0
+    CLAIMED = 1
+    IMPOSSIBLE = 2
+    claimed_fans = [NOT_CLAIMED] * len(exclusion_fans)
+    for i, line in enumerate(exclusion_fans):
+        score, name, sets, implied, identical, exceptions, accountOnce = line
+        if claimed_fans[i] != IMPOSSIBLE and not accountOnce:
+            claimed_fans[i] = CLAIMED
+            for j in implied+identical+exceptions:
+                claimed_fans[j] = IMPOSSIBLE
+    return [i for i, v in enumerate(claimed_fans) if v == CLAIMED]
+        
+
+def getOptionFragment(i, option):
+    this_fragment = H4('Grouping %d' % (i+1)) + getSituationFragment(option)
+    fans = get_fans(option)
+    point_fans = make_one_fan_per_line(fans)
+    sets = option['sets']
+    exclusion_fans = add_exclusion_columns(point_fans, sets)
+    #this_fragment += PRE(pprint.pformat(point_fans))
+    this_fragment += makeIdTable(["Score", "Name", "Sets", 
+                                  "Implied", "Identical", "Exceptions", "Account Once"],
+                                  exclusion_fans)
+    claimed_fans = optimal_claimed_fans(exclusion_fans)
+    this_fragment += PRE(pprint.pformat(claimed_fans))
+    return this_fragment
 
 def getAnswer(in_line):
     sit = parse_command_line(in_line)
@@ -85,16 +110,7 @@ def getAnswer(in_line):
                                   TEXT('Number of possible hand arrangements: %d' % len(opts)))
     option_fragments = []
     for i, option in enumerate(opts):
-        this_fragment = H4('Grouping %d' % (i+1)) + getOptionFragment(option)
-        fans = get_fans(option)
-        point_fans = make_one_fan_per_line(fans)
-        sets = option['sets']
-        exclusion_fans = add_exclusion_columns(point_fans, sets)
-        #this_fragment += PRE(pprint.pformat(point_fans))
-        this_fragment += makeIdTable(["Score", "Name", "Sets", 
-                                      "Implied", "Identical", "Exceptions", "Account Once"],
-                                      exclusion_fans)
-        option_fragments.append(this_fragment)
+        option_fragments.append(getOptionFragment(i, option))
 
     return normal_form_in_fragment + situation_fragment + wait_fragment + arrangement_count_fragment + sum(option_fragments, TEXT())
 
