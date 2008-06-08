@@ -1,0 +1,30 @@
+m 333d h 1116667772d w 2d
+47 poäng
+
+m 657b h 345678d4456c w 4c self_draw
+12 poäng
+
+m 234b 234d h 567b567dDg w gD self_draw
+6 poäng (Single wait är inte en account-once-hand)
+
+h 11d99brrDssWggD11c1d w 1d
+64 poäng (dvs ingen single wait, för den gäller bara 4-sets-and-a-pair-händer)
+
+h 1c258d369bwsenWgrD w Dw
+24 (men inga flowers för att gå ut!)
+
+m 123b 456b 789b h 45bDgg w 6b
+23 (Dvs man får inte räkna låga först, och ta pure straight så sent som möjligt)
+
+m 345b 567b 789b h 456bWw w Ww
+24 
+
+m b222 h c333 d444 b567 b8 w b8
+12 
+
+m 345c h 111222333bWs w Ws
+43
+
+h 1111222233d w 3d self_draw
+65
+
