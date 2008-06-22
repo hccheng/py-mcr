@@ -71,30 +71,6 @@ def getAnswerOrError(in_line):
         f = H3("Error")+TEXT(str(e))
     return str(DIV(indata_fragment+f))
 
-# Should be placed in maxpoints.py
-
-def optimal_claimed_fans(exclusion_fans):
-    NOT_CLAIMED = 0
-    CLAIMED = 1
-    IMPOSSIBLE = 2
-    claimed_fans = [NOT_CLAIMED] * len(exclusion_fans)
-    for i, line in enumerate(exclusion_fans):
-        score, name, sets, implied, identical, exceptions, accountOnce = line
-        if claimed_fans[i] != IMPOSSIBLE and not accountOnce:
-            claimed_fans[i] = CLAIMED
-            for j in implied+identical+exceptions:
-                claimed_fans[j] = IMPOSSIBLE
-    return [i for i, v in enumerate(claimed_fans) if v == CLAIMED]
-        
-def score_of_claimed(exclusion_fans, claimed_fans):
-    total = 0
-    for i in claimed_fans:
-        score, name, sets, implied, identical, exceptions, accountOnce = exclusion_fans[i]
-        total += score
-    return total
-        
-
-
 def getOptionFragment(i, option):
     this_fragment = H4('Grouping %d' % (i+1)) + getSituationFragment(option)
     fans = get_fans(option)
@@ -106,7 +82,7 @@ def getOptionFragment(i, option):
                                   "Implied", "Identical", "Exceptions", "Account Once"],
                                   exclusion_fans)
     claimed_fans = optimal_claimed_fans(exclusion_fans)
-    this_fragment += PRE("Claimed (non-account once) fans: " + pprint.pformat(claimed_fans))
+    this_fragment += PRE("Claimed fans: " + pprint.pformat(claimed_fans))
     this_fragment += PRE("Total points: " + str(score_of_claimed(exclusion_fans, claimed_fans)) )
     return this_fragment
 

@@ -28,3 +28,7 @@ m 345c h 111222333bWs w Ws
 h 1111222233d w 3d self_draw
 65
 
+Hand 10:
+h d1d1d1d1c2c2c2d2d2d2d2d3d3 w d3 self_draw
+51 poäng
+

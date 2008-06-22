@@ -1,21 +1,27 @@
 import os
 import time
+import doctest
 
 def do_tests():
-    tests = ["mahjongutil.py",
-             "mahjonggrouping.py", 
-             "informat.py", 
-             "xcombinations.py", 
-             "fanimplications.py", 
-             "identifan.py", 
-             "HTMLTags.py", 
-             "fanpoints.py"]
+    tests = [
+             "fanimplications", 
+             "fanpoints",
+             "xcombinations", 
+             "HTMLTags", 
+             "mahjongutil", 
+             "informat", 
+             "mahjonggrouping", 
+             "identifan", 
+            ]
     for t in tests:
-        print "-- Starting %s --" % t
+        print "%s: " % t
         start_time = time.time()
-        r = os.system("python %s" % t)
+        module = __import__(t)
+        r = doctest.testmod(module)
         s_duration = time.time() - start_time
-        print "-- Result of %s: %d - time %f --" % (t, r, s_duration)
+        tests_failed, tests_performed = r
+        print ("%d tests, %d failed in %.2fs --\n" % 
+              (tests_performed, tests_failed, s_duration))
 
 if __name__ == "__main__":
     do_tests()

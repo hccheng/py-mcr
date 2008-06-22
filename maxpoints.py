@@ -5,35 +5,39 @@ from fanimplications import *
 from mahjongutil import *
 import pprint
 
-def remove_implied(selected, point_fans):
-    selected_points, selected_fan, selected_set = selected
-    left = []
-    implied = get_implied_map()[selected_fan]
-    # all_used_sets are all sets used for this type of fan. 
-    # Only implied fans that do not use any of these sets can be kept
-    for (point, fan, sets) in point_fans:
-        if fan == selected_fan:
-            # A set can not be part of the same fan twice
-            if all([s not in selected_set for s in sets]):
-                left.append((point, fan, sets))
-        elif fan in implied:
-            # Keep it if at least one set is not in the selected fan
-            if any([s not in selected_set for s in sets]):
-                left.append((point, fan, sets))
-        else:
-            left.append((point, fan, sets))
-    point_fans[:] = left[:]
+NOT_CLAIMED = 0
+CLAIMED = 1
+IMPOSSIBLE = 2
+def fan_is_claimable(fan_status, accountOnce, dirty_sets, sets):
+    if fan_status == IMPOSSIBLE:
+        return False
+    if not accountOnce:
+        return True
+    else:
+        return len(dirty_sets.intersection(set(sets))) <= 1
+            
 
-def select_max_point_fans(point_fans):
-    selected_fans = []
-    while len(point_fans) > 0:
-        max_fan = point_fans.pop()
-        selected_fans.append(max_fan)
-        remove_implied(max_fan, point_fans)
-    return selected_fans
+def optimal_claimed_fans(exclusion_fans):
+    fan_status = [NOT_CLAIMED] * len(exclusion_fans)
+    dirty_sets = set()
+    for i, line in enumerate(exclusion_fans):
+        score, name, sets, implied, identical, exceptions, accountOnce = line
+        if fan_is_claimable(fan_status[i], accountOnce, dirty_sets, sets):
+        #if fan_status[i] != IMPOSSIBLE and not accountOnce:
+            fan_status[i] = CLAIMED
+            if accountOnce:
+                dirty_sets.update(set(sets))
+            for j in implied+identical+exceptions:
+                fan_status[j] = IMPOSSIBLE
 
-def get_total_points(point_fans):
-    return sum([point*len(set_list) for (point, fan, set_list) in point_fans])
+    return [i for i, v in enumerate(fan_status) if v == CLAIMED]
+        
+def score_of_claimed(exclusion_fans, claimed_fans):
+    total = 0
+    for i in claimed_fans:
+        score, name, sets, implied, identical, exceptions, accountOnce = exclusion_fans[i]
+        total += score
+    return total
 
 def make_one_fan_per_line(fans):
     point_fans = [(get_points(fan), fan, s) 
@@ -93,26 +97,48 @@ def option_max_points(option):
 
 def max_points(sit):
     """
-    >>> s = parse_command_line('m Weee m Wsss m Wwww h WnnDrr w Wn')
-    >>> print get_total_points(max_points(s)[0])
-    152
-    >>> pprint.pprint(max_points(s))
-    [[(88, 'Big Four Winds', [[0, 1, 2, 4]]),
-      (64, 'All Honors', [[0, 1, 2, 3, 4]])]]
-    >>> inline = 'm 123b 456b 789b 789b h We w We'
-    >>> print inline
-    >>> s = parse_command_line(inline)
-    >>> selected_fans = max_points(s)
-    >>> pprint.pprint(selected_fans)
-    
+    # OK
+    >>> max_points(parse_command_line('m 333d h 1116667772d w 2d')) # Hand 1
+    47
+    >>> max_points(parse_command_line('m 657b h 345678d4456c w 4c self_draw')) # Hand 2
+    12
+
+    # In progress
+    >>> max_points(parse_command_line('m 234b 234d h 567b567dDg w gD self_draw')) # Hand 3
+    If an account once hand comes along when some tiles are already dirty, and it does not have any
+    tiles in common with the dirty tiles, then put it 'on hold' until another account once hand is added, 
+    or when there are no more hands to add. 
+    6
+    # Future
+    >>> max_points(parse_command_line('h 11d99brrDssWggD11c1d w 1d')) # Hand 4
+    64
+    >>> max_points(parse_command_line('h 1c258d369bwsenWgrD w Dw')) # Hand 5
+    24
+    >>> max_points(parse_command_line('m 123b 456b 789b h 45bDgg w 6b')) # Hand 6
+    23
+    >>> max_points(parse_command_line('m 345b 567b 789b h 456bWw w Ww')) # Hand 7
+    24
+    >>> max_points(parse_command_line('m b222 h c333 d444 b567 b8 w b8')) # Hand 8
+    12
+    >>> max_points(parse_command_line('m 345c h 111222333bWs w Ws')) # Hand 9
+    43
+    >>> max_points(parse_command_line('h d1d1d1d1c2c2c2d2d2d2d2d3d3 w d3 self_draw')) # Hand 10
+    51
+
     """
+
     opts = get_options(sit)
-    counted_fans = []
+    option_value = []
     #pprint.pprint(opts)
     for option in opts:
         fans = get_fans(option)
-        counted_fans.append(option_max_points(option))
-    return counted_fans
+        point_fans = make_one_fan_per_line(fans)
+        sets = option['sets']
+        exclusion_fans = add_exclusion_columns(point_fans, sets)
+        claimed_fans = optimal_claimed_fans(exclusion_fans)
+        option_value.append(score_of_claimed(exclusion_fans, claimed_fans))
+    return max(option_value)
+
 
 def _test():
     import doctest
