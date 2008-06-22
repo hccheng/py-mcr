@@ -38,9 +38,26 @@ class myHandler(BaseHTTPRequestHandler):
                 self.wfile.write(mahtml.getAnswerOrError(in_string))
 
     def printHelp(self):
-        fragment = H1("Help") + P("No situation given") + P(A("try this", href='/h 1234564567899b w 9b'))
+        fragment = H1("Help") + P("No situation given") 
+        fragment += P(A("try this", href='/h 1234564567899b w 9b'))
         fragment += P(A("Crazy", href='/c Weeee Wssss Wwwww Wnnnn h Dr w Dr'))
-        fragment += FORM(INPUT(type="text", name="sit")+INPUT(type="submit", name="Go", value="Go"), 
+        baseline_hands = [
+            ('Hand 1', 47, 'm 333d h 1116667772d w 2d'),
+            ('Hand 2', 12, 'm 657b h 345678d4456c w 4c self_draw'),
+            ('Hand 3', 6, 'm 234b 234d h 567b567dDg w gD self_draw'),
+            ('Hand 4', 64, 'h 11d99brrDssWggD11c1d w 1d'),
+            ('Hand 5', 24, 'h 1c258d369bwsenWgrD w Dw'),
+            ('Hand 6', 23, 'm 123b 456b 789b h 45bDgg w 6b'),
+            ('Hand 7', 24, 'm 345b 567b 789b h 456bWw w Ww'),
+            ('Hand 8', 12, 'm b222 h c333 d444 b567 b8 w b8'),
+            ('Hand 9', 43, 'm 345c h 111222333bWs w Ws'),
+            ('Hand 10', 51, 'h d1d1d1d1c2c2c2d2d2d2d2d3d3 w d3 self_draw'),
+            ('Hand 11', 8, 'm 234b h 567b345678c3d w d3 self_draw'),
+            ]
+        for name, points, hand in baseline_hands:
+            fragment += P(A(name + (" - %d" % points), href=('/%s' % hand)))
+
+        fragment += FORM(INPUT(type="text", name="sit", size=40)+INPUT(type="submit", name="Go", value="Go"), 
                          method='get', action='form')
         fragment += PRE("""
 The tiles:

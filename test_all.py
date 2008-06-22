@@ -11,6 +11,7 @@ def do_tests():
              "mahjongutil", 
              "informat", 
              "mahjonggrouping", 
+             "maxpoints",
              "identifan", 
             ]
     for t in tests:

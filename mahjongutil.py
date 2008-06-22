@@ -51,6 +51,8 @@ def is_sorted_chow(ts):
     True
     >>> is_sorted_chow(['b3', 'b2', 'b1'])
     False
+    >>> is_sorted_chow([True])
+    False
     """
 
     global all_possible_chows

@@ -433,7 +433,7 @@ def get_concealed_hand(sit):
 def get_tile_hog(sit):
     """
     >>> get_tile_hog( get_one_option('h b1b1b1c1c1c1b1b2b3b6b8b9b9 w b7 f F3F5F6') )
-    ('Tile Hog', [[0, 1]])
+    ('Tile Hog', [['b1']])
     """
     sets = get_only_sets(sit['sets'])
     uses = {}
@@ -442,7 +442,11 @@ def get_tile_hog(sit):
             ul = uses.get(t, [])
             ul.append(i)
             uses[t] = ul
-    poss = [list(set(ul)) for t, ul in uses.items() if len(ul) == 4 and len(set(ul)) > 1]
+    # Can't put the sets in the list, the identical set checks later wouldn't allow two tile hogs then
+    #poss = [list(set(ul)) for t, ul in uses.items() if len(ul) == 4 and len(set(ul)) > 1]
+
+    # Just put a list of just one of the tiles, if four are used, but is not in a kong
+    poss = [[t] for t, ul in uses.items() if len(ul) == 4 and len(set(ul)) > 1]
     return ('Tile Hog', poss)
 
 # 4 points
