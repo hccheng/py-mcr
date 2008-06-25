@@ -153,11 +153,24 @@ def max_points(sit):
     >>> max_points(parse_command_line('m 345c h 111222333bWs w Ws')) # Hand 9
     43
     >>> max_points(parse_command_line('h d1d1d1d1c2c2c2d2d2d2d2d3d3 w d3 self_draw')) # Hand 10
-    51
+    52
     >>> max_points(parse_command_line('m 234b h 567b345678c3d w d3 self_draw')) # Hand 11
     8
-
-    """
+    >>> #If a combination of two scoring elements implies a third, that one is still claimable
+    >>> max_points(parse_command_line('m 888b 234b h 234b666b2b w 2b'))
+    117
+    >>> #Strange exception from Beyond the Green
+    >>> max_points(parse_command_line('h 222233446688bDg w Dg'))
+    118
+    >>> #Strange exception from Beyond the Green
+    >>> max_points(parse_command_line('h 1199b1199c11999d w 9d self_draw'))
+    92
+    >>> #Reversable does not combine with One Voided, even though it is not implied by def. 
+m 222b h 456b12345d99d w 3d
+    9
+    Obs! Reversible should not imply One Voided, it should be an exception
+    >>> Har kommit till 3.5 i Beyond the Green Book
+"""
 
     opts = get_options(sit)
     option_value = []
