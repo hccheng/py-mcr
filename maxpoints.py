@@ -162,14 +162,16 @@ def max_points(sit):
     >>> #Strange exception from Beyond the Green
     >>> max_points(parse_command_line('h 222233446688bDg w Dg'))
     118
+    Strange exception from Beyond the Green (All green does not get for One Voided)
     >>> #Strange exception from Beyond the Green
     >>> max_points(parse_command_line('h 1199b1199c11999d w 9d self_draw'))
+    Strange exception from Beyond the Green (All terminals does not get for One Voided)
     92
     >>> #Reversable does not combine with One Voided, even though it is not implied by def. 
-m 222b h 456b12345d99d w 3d
+    >>> max_points(parse_command_line('m 222b h 456b12345d99d w 3d'))
     9
     Obs! Reversible should not imply One Voided, it should be an exception
-    >>> Har kommit till 3.5 i Beyond the Green Book
+    >>> #Har kommit till 3.5 i Beyond the Green Book
 """
 
     opts = get_options(sit)

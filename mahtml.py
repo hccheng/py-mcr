@@ -10,7 +10,7 @@ import sys
 def getTileImages(ts):
     fragment = TEXT()
     for t in ts:
-        fragment += IMG(src='tiles/%s.png' % t)
+        fragment += IMG(src='tiles/%s.png' % t, alt=':%s: ' % t, title=t)
     return fragment
 
 def makeTable(header, cells):
