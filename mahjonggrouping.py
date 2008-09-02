@@ -1,5 +1,5 @@
 from mahjongutil import *
-from xcombinations import xcombinations
+#from xcombinations import xcombinations
 
 def group_7pairs(ts):
     """
@@ -81,7 +81,7 @@ def group_knitted_straight_and_normal(ts):
     else:
         return [[tuple(knitted)] + rest_alternatives[0]]
 
-def all_triplets_pos(ts):
+def all_triplets_pos_old(ts):
     """
     Really very slow and unecessary
     There should be much better ways. The tiles are ordered, and we know how triples look... 
@@ -105,6 +105,21 @@ def all_triplets_pos(ts):
             trips[tuple(trip)] = trip_idxs
     vals = trips.values()
     # If more than one combination (indexes) made the same tiles, only one remain
+    vals.sort()
+    return vals
+
+def all_triplets_pos(ts):
+    trips = {}
+    tc = len(ts)
+    for t1 in range(0, tc - 2):
+        for t2 in range(t1 + 1, tc - 1):
+            if is_start_of_triplets([ts[t1], ts[t2]]):
+                for t3 in range(t2 + 1, tc):
+                    trip_idxs = (t1, t2, t3)
+                    trip = [ts[i] for i in trip_idxs]
+                    if is_triplet(trip):
+                        trips[tuple(trip)] = trip_idxs
+    vals = trips.values()
     vals.sort()
     return vals
 

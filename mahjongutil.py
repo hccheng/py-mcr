@@ -41,6 +41,9 @@ def is_suited(ts):
 all_possible_chows = [(s+str(r1), s+str(r1+1), s+str(r1+2)) 
 		      for r1 in range(1,8) for s in "bcd"]
 
+all_possible_start_of_chows = [(s+str(r1), s+str(r1+1)) 
+		      for r1 in range(1,8) for s in "bcd"]
+
 def is_sorted_chow(ts):
     """
     >>> is_sorted_chow([])
@@ -57,6 +60,28 @@ def is_sorted_chow(ts):
 
     global all_possible_chows
     return tuple(ts) in all_possible_chows
+
+def is_start_of_sorted_chow(ts):
+    """
+    >>> is_start_of_sorted_chow([])
+    False
+    >>> is_start_of_sorted_chow(['b1', 'c2'])
+    False
+    >>> is_start_of_sorted_chow(['b1', 'b2'])
+    True
+    >>> is_start_of_sorted_chow(['b7', 'b8'])
+    True
+    >>> is_start_of_sorted_chow(['b8', 'b9'])
+    False
+    >>> is_start_of_sorted_chow(['b3', 'b2'])
+    False
+    >>> is_start_of_sorted_chow([True])
+    False
+    """
+
+    global all_possible_start_of_chows
+    return tuple(ts) in all_possible_start_of_chows
+
 
 def old_is_sorted_chow(ts):
     if len(ts) != 3 or not is_suited(ts) or len([t for t in ts if t[0] in "WDF"]) > 0:
@@ -92,6 +117,9 @@ def is_pung(ts):
 
 def is_triplet(ts):
     return is_pung(ts) or is_sorted_chow(ts)
+
+def is_start_of_triplets(ts):
+    return is_eye(ts) or is_start_of_sorted_chow(ts)
 
 def is_kong(ts):
     """
