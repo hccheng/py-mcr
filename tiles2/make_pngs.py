@@ -3,7 +3,7 @@ from PIL import Image
 
 for root, dirs, files in tuple(os.walk('.')):
     files = [f[:-4] for f in files if f.endswith('.gif')]
-    files = [f for f in files if not f.endswith('r')]
+    #files = [f for f in files if not f.endswith('r')]
 
     for image_name in files:
         image = Image.open(image_name+".gif")

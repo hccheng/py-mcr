@@ -193,13 +193,15 @@ def parse_command_line(s):
 	if winning[0] in player_tiles_wo_win:
             raise ParseException("The winning tile is already in the hand, it can not be robbing the kong")
 
-    ts = all_tiles()
+    ts = all_non_flower_tile_types()
     tile_count = {}
     for t in hand:
         tile_count[t] = tile_count.get(t, 0) + 1
     all_in_hand = [t for t, c in tile_count.items() if c == 4]
     ts = list(set(ts).difference(set(all_in_hand)))
     ts.sort()
+    # ts is now a sorted list of all tile types (except flowers) that there 
+    # are at least one left of (i.e. not all 4 are already in the hand). 
 
     waits = [t for t in ts if len(group_tiles(hand + [t])) != 0]
 

@@ -10,7 +10,7 @@ import sys
 def getTileImages(ts):
     fragment = TEXT()
     for t in ts:
-        fragment += IMG(src='tiles/%s.png' % t, alt=':%s: ' % t, title=t)
+        fragment += IMG(src='tiles2/%s.png' % t, alt=':%s: ' % t, title=t)
     return fragment
 
 def makeTable(header, cells):
@@ -69,7 +69,7 @@ def getAnswerOrError(in_line):
         f = getAnswer(in_line)
     except ParseException, e:
         f = H3("Error")+TEXT(str(e))
-    return str(DIV(indata_fragment+f))
+    return DIV(indata_fragment+f)
 
 def getOptionFragment(i, option):
     this_fragment = H4('Grouping %d' % (i+1)) + getSituationFragment(option)

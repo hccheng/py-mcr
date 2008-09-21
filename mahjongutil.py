@@ -6,12 +6,25 @@ class ParseException(Exception):
     def __str__(self):
         return self.msg
 
-def all_tiles():
+all_non_flower_tiles_ordered_string = \
+        'c1d1b1c2d2b2c3d3b3c4d4b4c5d5b5c6d6b6c7d7b7c8d8b8c9d9b9DrDgDwWeWsWwWn'
+all_flower_tiles_ordered_string = 'F1F2F3F4F5F6F7F8'
+all_tiles_ordered_string = (all_non_flower_tiles_ordered_string + 
+                            all_flower_tiles_ordered_string)
+
+def all_tile_types():
     """
-    >>> len(all_tiles()) == 3*9+3+4+8
+    >>> len(all_tile_types()) == 3*9 + 3 + 4 + 8
     True
     """
-    return make_tile_list("c1d1b1c2d2b2c3d3b3c4d4b4c5d5b5c6d6b6c7d7b7c8d8b8c9d9b9DrDgDwWeWsWwWnF1F2F3F4F5F6F7F8")
+    return make_tile_list(all_tiles_ordered_string)
+
+def all_non_flower_tile_types():
+    """
+    >>> len(all_non_flower_tile_types()) == 3*9 + 3 + 4 
+    True
+    """
+    return make_tile_list(all_non_flower_tiles_ordered_string)
 
 def sort_tiles(ts):
     """
@@ -19,7 +32,7 @@ def sort_tiles(ts):
     >>> sort_tiles(['Dw', 'Dr'])
     ['Dr', 'Dw']
     """
-    order = "c1d1b1c2d2b2c3d3b3c4d4b4c5d5b5c6d6b6c7d7b7c8d8b8c9d9b9DrDgDwWeWsWwWnF1F2F3F4F5F6F7F8"
+    order = all_tiles_ordered_string
     order_dict = dict([(k, v) 
 	               for (v, k) 
 		       in enumerate([order[i:i+2] for i in range(0, len(order), 2)])])

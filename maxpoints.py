@@ -143,7 +143,6 @@ def max_points(sit):
     64
     >>> max_points(parse_command_line('h 1c258d369bwsenWgrD w Dw')) # Hand 5
     24
-    Obs! Har med flowers som possible going out tiles
     >>> max_points(parse_command_line('m 123b 456b 789b h 45bDgg w 6b')) # Hand 6
     23
     >>> max_points(parse_command_line('m 345b 567b 789b h 456bWw w Ww')) # Hand 7
