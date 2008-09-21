@@ -48,9 +48,6 @@ def group_knitted_and_honors(ts):
     #if there are more than one suit in any of the low, middle or high groups
     if any([len(set([t[0] for t in part])) >1 for part in [low, middle, high]]):
 	return []
-    #if any([len(set([int(t[1])%3 for t in ts if t[0] == suit])) > 1 for suit in suits]):
-	#return []
-    #return [tuple([[t for t in ts if int(t[1]) % 3 == q][0] for q in [1,4,7]])]
     
     return [[tuple(low + middle + high), honors]]
 
@@ -186,13 +183,20 @@ def group_tiles(tiles):
     >>> group_tiles(make_tile_list("b1b2b3b1b2b3b1b2b3"))
     [[('b1', 'b1', 'b1'), ('b2', 'b2', 'b2'), ('b3', 'b3', 'b3')], [('b1', 'b2', 'b3'), ('b1', 'b2', 'b3'), ('b1', 'b2', 'b3')]]
     
-
     Pure straight, half flush
     >>> group_tiles(make_tile_list("b1b2b3b4b5b6b7b8b9DrDrDrWeWe"))
     [[('Dr', 'Dr', 'Dr'), ('We', 'We'), ('b1', 'b2', 'b3'), ('b4', 'b5', 'b6'), ('b7', 'b8', 'b9')]]
     
     >>> group_tiles(make_tile_list("b1b1b1b2b3b4b4b4DrDrDrWeWeWe"))
     [[('Dr', 'Dr', 'Dr'), ('We', 'We', 'We'), ('b1', 'b1'), ('b1', 'b2', 'b3'), ('b4', 'b4', 'b4')], [('Dr', 'Dr', 'Dr'), ('We', 'We', 'We'), ('b1', 'b1', 'b1'), ('b2', 'b3', 'b4'), ('b4', 'b4')]]
+
+    7 pairs
+    >>> group_tiles(make_tile_list("b1b2b4b5b6b7Wwb1b2b4b5b6b7Ww"))
+    [[('Ww', 'Ww'), ('b1', 'b1'), ('b2', 'b2'), ('b4', 'b4'), ('b5', 'b5'), ('b6', 'b6'), ('b7', 'b7')]]
+
+    7 pairs, but with flowers
+    >>> group_tiles(make_tile_list("b1b2b3b4b5b6b1b2b3b4b5b6F1F1"))
+    []
 
     6 pairs and two non matching tiles
     >>> group_tiles(make_tile_list("b1b2b3b4b5b6b7b1b2b3b4b5b6b8"))
@@ -237,12 +241,13 @@ def group_tiles(tiles):
     """
     candidates = []
     ts = list(tiles)
-    ts.sort()
-    candidates.extend(group_normal(ts))
-    candidates.extend(group_7pairs(ts))
-    candidates.extend(group_thirteen_orphans(ts))
-    candidates.extend(group_knitted_and_honors(ts))
-    candidates.extend(group_knitted_straight_and_normal(ts))
+    if (not any(flower in ts for flower in make_tile_list("12345678F"))):
+        ts.sort()
+        candidates.extend(group_normal(ts))
+        candidates.extend(group_7pairs(ts))
+        candidates.extend(group_thirteen_orphans(ts))
+        candidates.extend(group_knitted_and_honors(ts))
+        candidates.extend(group_knitted_straight_and_normal(ts))
     return candidates
 
 def _test():
