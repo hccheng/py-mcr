@@ -10,7 +10,8 @@ import sys
 def getTileImages(ts):
     fragment = TEXT()
     for t in ts:
-        fragment += IMG(src='tiles2/%s.png' % t, alt=':%s: ' % t, title=t)
+        fragment += IMG(src='images/%s.png' % t, alt=':%s: ' % t, 
+                        width = 36, height = 50, title=t)
     return fragment
 
 def makeTable(header, cells):
@@ -28,7 +29,6 @@ def makeIdTable(header, cells):
 def getSituationFragment(sit):
     fragment = TEXT()
     if len(sit['m']) > 0:
-        #fragment += H4("Melded") + Sum([getTileImages(ts) for ts in sit['m']], TEXT(" "))
         fragment += TR(TH("Melded") + TD(Sum([getTileImages(ts) for ts in sit['m']], TEXT(" "))))
     if len(sit['c']) > 0:
         fragment += TR(TH("Concealed") + TD(Sum([getTileImages(ts) for ts in sit['c']], TEXT(" "))))
