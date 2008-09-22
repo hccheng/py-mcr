@@ -9,7 +9,7 @@ import time
 def get_hand_form(sit=''):
     return FORM(INPUT(type="text", name="sit", value=sit, size=40) + 
                 INPUT(type="submit", name="calc", value="Calculate"), 
-                method='get', action='form')  + A("Main page", href='/')
+                method='get', action='')  + A("Main page", href='/')
 
 def help_fragment():
     fragment = P(TEXT('Enter a situation and press "Calculate" (see ') + A('format', href='#format') + TEXT(' below)'))
