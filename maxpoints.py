@@ -122,14 +122,13 @@ def add_exclusion_columns(se, sets_in_hand):
              account_once_applies(sets, sets_in_hand)] 
              for p, n, sets in se]
 
-"""
-def option_max_points(option):
+def max_points_of_option(option):
     fans = get_fans(option)
     point_fans = make_one_fan_per_line(fans)
-    print "All possible individual fans: "
-    pprint.pprint(point_fans)
-    return select_max_point_fans(point_fans)
-"""
+    sets = option['sets']
+    exclusion_fans = add_exclusion_columns(point_fans, sets)
+    claimed_fans = optimal_claimed_fans(exclusion_fans)
+    return score_of_claimed(exclusion_fans, claimed_fans)
 
 def max_points(sit):
     """
@@ -155,6 +154,8 @@ def max_points(sit):
     52
     >>> max_points(parse_command_line('m 234b h 567b345678c3d w d3 self_draw')) # Hand 11
     8
+    >>> max_points(parse_command_line('h 123123b123123bWe w We')) # Quadrople chows should imply tile hogs
+    61
     >>> #If a combination of two scoring elements implies a third, that one is still claimable
     >>> max_points(parse_command_line('m 888b 234b h 234b666b2b w 2b'))
     117
@@ -173,18 +174,8 @@ def max_points(sit):
     >>> #Har kommit till 3.5 i Beyond the Green Book
 """
 
-    opts = get_options(sit)
-    option_value = []
-    #pprint.pprint(opts)
-    for option in opts:
-        fans = get_fans(option)
-        point_fans = make_one_fan_per_line(fans)
-        sets = option['sets']
-        exclusion_fans = add_exclusion_columns(point_fans, sets)
-        claimed_fans = optimal_claimed_fans(exclusion_fans)
-        option_value.append(score_of_claimed(exclusion_fans, claimed_fans))
-    return max(option_value)
-
+    options = get_options(sit)
+    return max(max_points_of_option(option) for option in options)
 
 def _test():
     import doctest

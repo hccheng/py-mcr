@@ -643,7 +643,7 @@ def get_out_with_replacement_tile(sit):
 
 def get_robbing_the_kong(sit):
     """
-    >>> get_robbing_the_kong( get_one_option('m b1b2b3 h d2d4b9b9b9b8b8 w d3 robbing') )
+    >>> get_robbing_the_kong( get_one_option('m b1b2b3 b4b5b6 h d2d4b9b9b9b8b8 w d3 robbing') )
     ('Robbing the Kong', [[True]])
     """
     poss = []

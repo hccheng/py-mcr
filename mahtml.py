@@ -83,23 +83,71 @@ def getOptionFragment(i, option):
                                   exclusion_fans)
     claimed_fans = optimal_claimed_fans(exclusion_fans)
     this_fragment += PRE("Claimed fans: " + pprint.pformat(claimed_fans))
-    this_fragment += PRE("Total points: " + str(score_of_claimed(exclusion_fans, claimed_fans)) )
+    this_fragment += PRE("Total points: %d" % score_of_claimed(exclusion_fans, claimed_fans) )
+    return this_fragment
+
+def getMaximumPointFragment(option):
+    fans = get_fans(option)
+    point_fans = make_one_fan_per_line(fans)
+    sets = option['sets']
+    exclusion_fans = add_exclusion_columns(point_fans, sets)
+    claimed_fans = optimal_claimed_fans(exclusion_fans)
+    points = score_of_claimed(exclusion_fans, claimed_fans) 
+
+    this_fragment = H2('Maximum %d points' % points) + getSituationFragment(option) + H3('Scoring')
+    fan_table = TR(TH('Points') + TH('Scoring Element') + TH('Tiles'))
+    for fan_index in claimed_fans:
+        fan_points, fan_name, sets, _, _, _, _ = exclusion_fans[fan_index]
+        if len(sets) == 1:
+            if type(sets[0]) == str:
+                # A single tile
+                tile_string = getTileImages([sets[0]])
+            else:
+                # A boolean like for single wait
+                tile_string = getTileImages([option['w']])
+        elif len(sets) >= 5:
+            tile_string = 'Entire hand'
+        else:
+            hand_sets = option['sets']
+            tiles = []
+            for s in sets:
+                set_type, set_tiles = hand_sets[s]
+                tiles.append(set_tiles)
+            tile_string = Sum([getTileImages(ts) for ts in tiles], TEXT(" "))
+
+        fan_table += TR(TD('%d' % fan_points) +
+                        TD('%s' % fan_name) +
+                        TD('%s' % tile_string))
+        
+    this_fragment += TABLE(fan_table)
+    this_fragment += P("Total points: %d" % points)
+
     return this_fragment
 
 def getAnswer(in_line):
     sit = parse_command_line(in_line)
+    opts = get_options(sit)
+    opts.sort(key = max_points_of_option)
+    opts.reverse()
+
+    if len(opts) > 0:
+        maximum_point_fragment = getMaximumPointFragment(opts[0])
+    else:
+        maximum_point_fragment = TEXT()
+
     normal_form_in_line = make_normal_inline(sit)
     normal_form_in_fragment = H3("Normal form situation string")+TEXT(normal_form_in_line)
     situation_fragment = H3("Situation")+getSituationFragment(sit) 
     wait_fragment = H3("Wait Analysis")+getWaitAnalysisFragment(sit)
-    opts = get_options(sit)
     arrangement_count_fragment = (H3("Hand arrangements") +
                                   TEXT('Number of possible hand arrangements: %d' % len(opts)))
-    option_fragments = []
-    for i, option in enumerate(opts):
-        option_fragments.append(getOptionFragment(i, option))
+    option_fragments = [getOptionFragment(i, option) for i, option in enumerate(opts)]
 
-    return normal_form_in_fragment + situation_fragment + wait_fragment + arrangement_count_fragment + sum(option_fragments, TEXT())
+    return (maximum_point_fragment + 
+            H2('Details') + 
+            normal_form_in_fragment + situation_fragment + 
+            wait_fragment + 
+            arrangement_count_fragment + sum(option_fragments, TEXT()))
 
 def main():
     print getAnswerOrError(sys.argv[1] if len(sys.argv) > 1 else "")

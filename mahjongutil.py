@@ -258,7 +258,7 @@ def make_tile_list(s):
     >>> "".join(make_tile_list("123"))
     Traceback (most recent call last):
     ...
-    ParseException: Missing character at pos=3
+    ParseException: Missing character at pos 3 in string 123
     >>> "".join(make_tile_list("123zb"))
     Traceback (most recent call last):
     ...
@@ -280,7 +280,7 @@ def make_tile_list(s):
             else:
                 ts.extend(make_tiles(type_pos, [(c, i)]))
     if len(pre_ranks) > 0:
-	raise ParseException("Missing character at pos="+str(len(s)))
+        raise ParseException("Missing character at pos %d in string %s" % (len(s), s))
     return sort_tiles(ts)
 
 def make_tiles(type_pos, ranks_pos):

@@ -1,5 +1,6 @@
 from mahjongutil import *
 from mahjonggrouping import *
+from collections import defaultdict
 
 def get_options(sit):
     """
@@ -26,13 +27,38 @@ def get_options(sit):
       'v': ['b7', 'b7', 'b7'],
       'w': 'b7',
       'waits': ['b4', 'b7']}]
-    >>> s = parse_command_line('c b9b9b9b9 h b11122233 w b3 f F3F5F6 v b7b7b7 self_draw')
+    >>> s = parse_command_line('c b9b9b9b9 h b1112223388 w b3 f F3F5F6 v b7b7b7 self_draw')
     >>> os = get_options(s)
     >>> pprint.pprint(os)
     [{'c': [('b9', 'b9', 'b9', 'b9')],
       'f': ['F3', 'F5', 'F6'],
-      'h': [('b1', 'b1', 'b1'), ('b2', 'b2', 'b2'), ('b3', 'b3', 'b3')],
-      'h_wait': ['b1', 'b1', 'b1', 'b2', 'b2', 'b2', 'b3', 'b3'],
+      'h': [('b1', 'b2', 'b3'),
+            ('b1', 'b2', 'b3'),
+            ('b1', 'b2', 'b3'),
+            ('b8', 'b8')],
+      'h_wait': ['b1', 'b1', 'b1', 'b2', 'b2', 'b2', 'b3', 'b3', 'b8', 'b8'],
+      'kong_replacement': False,
+      'last_turn': False,
+      'm': [],
+      'robbing': False,
+      'rw': None,
+      'self_draw': True,
+      'sets': [('c', ('b9', 'b9', 'b9', 'b9')),
+               ('h', ('b1', 'b2', 'b3')),
+               ('h', ('b1', 'b2', 'b3')),
+               ('h', ('b1', 'b2', 'b3')),
+               ('h', ('b8', 'b8'))],
+      'sw': None,
+      'v': ['b7', 'b7', 'b7'],
+      'w': 'b3',
+      'waits': ['b3', 'b8']},
+     {'c': [('b9', 'b9', 'b9', 'b9')],
+      'f': ['F3', 'F5', 'F6'],
+      'h': [('b1', 'b1', 'b1'),
+            ('b2', 'b2', 'b2'),
+            ('b3', 'b3', 'b3'),
+            ('b8', 'b8')],
+      'h_wait': ['b1', 'b1', 'b1', 'b2', 'b2', 'b2', 'b3', 'b3', 'b8', 'b8'],
       'kong_replacement': False,
       'last_turn': False,
       'm': [],
@@ -42,29 +68,12 @@ def get_options(sit):
       'sets': [('c', ('b9', 'b9', 'b9', 'b9')),
                ('h', ('b1', 'b1', 'b1')),
                ('h', ('b2', 'b2', 'b2')),
-               ('h', ('b3', 'b3', 'b3'))],
+               ('h', ('b3', 'b3', 'b3')),
+               ('h', ('b8', 'b8'))],
       'sw': None,
       'v': ['b7', 'b7', 'b7'],
       'w': 'b3',
-      'waits': ['b3']},
-     {'c': [('b9', 'b9', 'b9', 'b9')],
-      'f': ['F3', 'F5', 'F6'],
-      'h': [('b1', 'b2', 'b3'), ('b1', 'b2', 'b3'), ('b1', 'b2', 'b3')],
-      'h_wait': ['b1', 'b1', 'b1', 'b2', 'b2', 'b2', 'b3', 'b3'],
-      'kong_replacement': False,
-      'last_turn': False,
-      'm': [],
-      'robbing': False,
-      'rw': None,
-      'self_draw': True,
-      'sets': [('c', ('b9', 'b9', 'b9', 'b9')),
-               ('h', ('b1', 'b2', 'b3')),
-               ('h', ('b1', 'b2', 'b3')),
-               ('h', ('b1', 'b2', 'b3'))],
-      'sw': None,
-      'v': ['b7', 'b7', 'b7'],
-      'w': 'b3',
-      'waits': ['b3']}]
+      'waits': ['b3', 'b8']}]
     """
     hand_plus_winning = sit['h'] + [sit['w']]
     hand_combination_options = group_tiles(hand_plus_winning)
@@ -117,29 +126,55 @@ def parse_command_line(s):
      'v': ['b7', 'b7', 'b7'],
      'w': 'b7',
      'waits': ['b4', 'b7']}
-    >>> s = parse_command_line('m b1b2b3 m b4b5b6 c b9b9b9b9 h b1b5b6 w b7 f F3F5F6 v b7b7b7 last_turn sw We')
+    >>> s = parse_command_line('m b1b2b3 m b4b5b6 c b9b9b9b9 h b1b1b5b6 w b7 f F3F5F6 v b7b7b7 last_turn sw We')
     >>> print s['sw']
     We
     >>> print s['last_turn']
     True
-    >>> s = parse_command_line('m b1b2b3 m b4b5b6 c b9b9b9b9 h b1b5b6 w b7 f F3F5F6 v b7b7b7 last_turn sw We kong_replacement')
-    >>> s = parse_command_line('m b1b2b3 m b4b5b6 h b9b9b9 h b1b5b6 w b7 f F3F5F6 v b7b7b7 sw We kong_replacement')
+    >>> s = parse_command_line('m b1b2b3 m b4b5b6 c b9b9b9b9 h b1b1b5b6 w b7 f F3F5F6 v b7b7b7 last_turn sw We kong_replacement')
+    >>> s = parse_command_line('m b1b2b3 m b4b5b6 h b9b9b9 h b1b1b5b6 w b7 f F3F5F6 v b7b7b7 sw We kong_replacement')
     Traceback (most recent call last):
     ...
     ParseException: Must have a kong to have kong_replacement
-    >>> s = parse_command_line('m b1b2b3 m b5b6b7 h b9b9b9 h b1b5b6 w b7 f F3F5F6 sw We robbing')
+    >>> s = parse_command_line('m b1b2b3 m b5b6b7 h b9b9b9 h b1b1b5b6 w b7 f F3F5F6 sw We robbing')
     Traceback (most recent call last):
     ...
     ParseException: The winning tile is already in the hand, it can not be robbing the kong
-    >>> s = parse_command_line('m b1b2b3 m b5b6b7 h b9b9b9 h b1b5b6 w b7 f F3F5F6 sw We robbing v b9b9')
+    >>> s = parse_command_line('m b1b2b3 m b5b6b7 h b9b9b9 h b1b1b5b6 w b7 f F3F5F6 sw We robbing v b9b9')
     Traceback (most recent call last):
     ...
-    ParseException: There are only four tiles of each, and one of each flower
+    ParseException: There are only four of each tile, and one of each flower
+
+    >>> parse_command_line('h 79b m 1111223b 578c w 8b')
+    Traceback (most recent call last):
+    ...
+    ParseException: b1b1b1b1b2b2b3 is not a melded pung, chow or kong
+
+    >>> parse_command_line('h 79b m 1111b 223b 578c w 8b')
+    Traceback (most recent call last):
+    ...
+    ParseException: b2b2b3 is not a melded pung, chow or kong
+
+    >>> parse_command_line('h 79b m 11b 123b 578c w 8b')
+    Traceback (most recent call last):
+    ...
+    ParseException: b1b1 is not a melded pung, chow or kong
+
+    >>> parse_command_line('h 79b m 111b 123b 578c w 8b')
+    Traceback (most recent call last):
+    ...
+    ParseException: c5c7c8 is not a melded pung, chow or kong
+
+    >>> parse_command_line('h 79b m 111b 123b 678c w 8b')
+    Traceback (most recent call last):
+    ...
+    ParseException: Incorrect number of tiles in the hand, should be 14 plus one for each kong
+
     """
     types = list('mchwvf') + ['sw', 'rw']
     booleans = "self_draw last_turn kong_replacement robbing".split()
     ws = s.split()
-    boxed = {}
+    boxed = defaultdict(list)
     type = None
     for w in ws:
         if w in booleans:
@@ -147,12 +182,15 @@ def parse_command_line(s):
         elif w in types:
             type = w
         else:
-            l = boxed.get(type, [])
-            l.append(w)
-            boxed[type] = l
-    #print boxed
-    melded = [tuple(make_tile_list(mt)) for mt in boxed.get('m', [])]
+            boxed[type].append(w)
+
+    melded = [tuple(sorted(make_tile_list(mt))) for mt in boxed.get('m', [])]
+    for s in melded:
+        if not (is_triplet(s) or is_kong(s)):
+            raise ParseException("%s is not a melded pung, chow or kong" % "".join(s))
     concealed = [tuple(make_tile_list(mt)) for mt in boxed.get('c', [])]
+    if not all(is_kong(s) for s in concealed):
+        raise ParseException("Kongs are allowed in the melded sets")
     hand = make_tile_list("".join(boxed.get('h', [])))
     winning = make_tile_list("".join(boxed.get('w', [])))
     visible = make_tile_list("".join(boxed.get('v', [])))
@@ -178,13 +216,16 @@ def parse_command_line(s):
         round_wind.append(None)
 
     player_tiles_wo_win = sum([list(st) for st in melded + concealed], []) + hand
+    kong_count = sum(is_kong(s) for s in melded + concealed)
+    if len(player_tiles_wo_win) + 1 != 14 + kong_count:
+        raise ParseException('Incorrect number of tiles in the hand, should be 14 plus one for each kong')
     used_tiles = player_tiles_wo_win + winning + visible + flowers
     max_tile = max([used_tiles.count(t) 
 	            for t in used_tiles if t[0] != "F"] +[0])
     max_flower = max([used_tiles.count(t) 
 	              for t in used_tiles if t[0] == "F"] +[0])
     if max_tile > 4 or max_flower > 1:
-        raise ParseException("There are only four tiles of each, and one of each flower")
+        raise ParseException("There are only four of each tile, and one of each flower")
 
     if kong_replacement and not any([is_kong(st) for st in melded+concealed]):
         raise ParseException("Must have a kong to have kong_replacement")
