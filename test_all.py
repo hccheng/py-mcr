@@ -13,6 +13,7 @@ def do_tests():
              "mahjonggrouping", 
              "maxpoints",
              "identifan", 
+             "mahtml", 
             ]
     for t in tests:
         print "%s: " % t
