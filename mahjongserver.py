@@ -66,12 +66,13 @@ def help_fragment():
     return fragment
 
 def get_page(situation):
-    bgcolor = '#A2C734'
+    bgcolor = '#C2D734'
     title = 'MCR Mahjong Hand Score Calculator'
     head = HEAD(TITLE(title))
     header = P(H1(title))
     footer = P(TEXT('This page use ') + A('pyMCR', href='http://code.google.com/p/py-mcr/') + TEXT(', an open source Mahjong Competition Rules hand scoring library. Post feedback or questions on the ') + A('Swedish Mahjong Association forums', href='http://www.mahjong-gbg.se/forum/viewtopic.php?f=13&t=129') + TEXT('.')) + \
-    P(TEXT('Tile graphics are from ') + A('Mahjong Wiki', href='http://mahjong.wikidot.com/') + TEXT(' and they are released under a Creative Commons licence.'))
+    P(TEXT('Tile graphics are from ') + A('Mahjong Wiki', href='http://mahjong.wikidot.com/') + TEXT(' and they are released under a Creative Commons licence.')) + \
+    P(TEXT('Version 1.1'))
     if situation == None:
         page = head + BODY(header + help_fragment() + footer, 
                            bgcolor=bgcolor)
@@ -107,14 +108,17 @@ def main():
                 parameters = dict(urllib.splitvalue(v) for v in query.split("&")) if query else {}
                 print parameters
     
-                if path == '/':
-                    situation = None
-                elif path == '/form':
+                if 'sit' in parameters:
                     situation = parameters['sit']
                 else:
-                    situation = query_string[1:]
+                    situation = None
+                #else:
+                    #situation = query_string[1:]
+                print "situation:", situation
                 page = get_page(situation)
+                self.wfile.write('<html>')
                 self.wfile.write(page)
+                self.wfile.write('</html>')
     
         def printBrowserHeaders(self):
             headers = self.headers.dict
