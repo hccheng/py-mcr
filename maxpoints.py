@@ -185,8 +185,8 @@ def max_points(sit):
     >>> #Reversable does not combine with One Voided, even though it is not implied by def. 
     >>> max_points(parse_command_line('m 222b h 456b12345d99d w 3d'))
     9
-    NB! Reversible should not imply One Voided, it should be an exception
-    >>> #Har kommit till 3.5 i Beyond the Green Book
+
+    >>> #Have reached 3.5 in "Beyond the Green Book"
 
     New tests for version 1.1, all the fixed bugs
 
@@ -218,6 +218,11 @@ def max_points(sit):
     >>> max_points(parse_command_line('m c78c9 h b333 c555 d88 DwDw w d8')) 
     2
 
+    Reported, but not yet verified as an error: 
+
+    Is it possible to get Last Tile, when two are visible, and the winning tile completes the eye? 
+    >>> max_points(parse_command_line('v Dgg h Dg Wss d1122448899 w Dg self_draw')) 
+    38
 """
 
     options = get_options(sit)
