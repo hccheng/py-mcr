@@ -1206,7 +1206,9 @@ def get_fans(sit):
                    get_mixed_triple_chows, get_mixed_straight, get_mixed_shifted_pungs, 
                    get_two_concealed_kongs, get_last_tile_draw, get_last_tile_claim, 
                    get_out_with_replacement_tile, get_robbing_the_kong, get_reversible_tiles, 
-                   # Can't put chicken here 
+                   # Can't put chicken here (in 8 points), 
+                   # because it will be identified when nothing in this list is found
+
                    # 12 points
                    get_big_three_winds, get_knitted_straight, get_upper_four, get_lower_four, 
                    get_lesser_honors_and_knitted_tiles, 
