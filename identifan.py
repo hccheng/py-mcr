@@ -465,11 +465,13 @@ def get_outside_hand(sit):
     ('Outside Hand', [[0, 1, 2, 3, 4]])
     >>> get_outside_hand( get_one_option('m c2c3c4 m b1b2b3 m c1c1c1 h d7d8d9b9 w b9 f F3F5F6') )
     ('Outside Hand', [])
+    >>> get_outside_hand( get_one_option('h b789 c9 m DwDwDw DrDrDrDr WsWsWs w c9') )
+    ('Outside Hand', [[0, 1, 2, 3, 4]])
     """
     poss = []
     sets = get_only_sets(sit['sets'])
     if all([(any([is_terminal(t) or is_honor(t) for t in s]) 
-             and len(s) < 4)
+             and len(s) <= 4)
             for s in sets]):
         poss.append(all_set_indexes(sets))
     return ('Outside Hand', poss)

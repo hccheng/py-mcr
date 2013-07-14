@@ -175,8 +175,14 @@ def max_points(sit):
     >>> #Har kommit till 3.5 i Beyond the Green Book
 
     New tests for version 1.1, all the fixed bugs
-    >>> max_points(parse_command_line('m 345d 444b 978c h 3d4d DrDr w d2')) # Chicken hand, used to be 12
+
+    Chicken Hand should be 8 points, used to be 12. (Lasker 2009-10-18)
+    >>> max_points(parse_command_line('m 345d 444b 978c h 3d4d DrDr w d2')) 
     8
+
+    Outside Hand can include kongs. (Lasker 2009-10-18)
+    >>> max_points(parse_command_line('h b789 c9 m DwDwDw DrDrDrDr WsWsWs w c9')) 
+    14
 
 """
 
