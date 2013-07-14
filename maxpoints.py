@@ -3,7 +3,6 @@ from identifan import *
 from fanpoints import *
 from fanimplications import *
 from mahjongutil import *
-import pprint
 
 NOT_CLAIMED = 0
 CLAIMED = 1
@@ -155,9 +154,7 @@ def max_points(sit):
     >>> max_points(parse_command_line('m 234b h 567b345678c3d w d3 self_draw')) # Hand 11
     8
 
-    >>> max_points(parse_command_line('m 345d 444b 978c h 3d4d DrDr w d2')) # Chicken hand
-    8
-
+    Examples from "Beyond the Green Book"
     >>> max_points(parse_command_line('h 123123b123123bWe w We')) # Quadrople chows should imply tile hogs
     61
     >>> #If a combination of two scoring elements implies a third, that one is still claimable
@@ -176,6 +173,11 @@ def max_points(sit):
     9
     NB! Reversible should not imply One Voided, it should be an exception
     >>> #Har kommit till 3.5 i Beyond the Green Book
+
+    New tests for version 1.1, all the fixed bugs
+    >>> max_points(parse_command_line('m 345d 444b 978c h 3d4d DrDr w d2')) # Chicken hand, used to be 12
+    8
+
 """
 
     options = get_options(sit)
