@@ -82,7 +82,9 @@ def get_options(sit):
         sit_op = dict(sit)
         sit_op['h_wait'] = sit_op['h']
         sit_op['h'] = ho
-	sit_op['sets'] = [('m', st) for st in sit_op['m']] + [('c', st) for st in sit_op['c']] + [('h', st) for st in ho]
+	sit_op['sets'] = ([('m', st) for st in sit_op['m']] + 
+                          [('c', st) for st in sit_op['c']] + 
+                          [('h', st) for st in ho])
         situation_options.append(sit_op)
     return situation_options
 

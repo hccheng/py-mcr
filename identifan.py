@@ -42,7 +42,11 @@ def is_two_terminal_chows(sa, sb):
 
 def is_same_rank_pungs(*ss):
     rank = ss[0][0][1]
-    return all([(is_pung(s) or is_kong(s)) and (s[0][1] == rank) for s in ss])
+    if rank not in "123456789":
+      # This is to handle that Ww and Dw is not the same rank
+      return False
+    else:
+      return all([(is_pung(s) or is_kong(s)) and (s[0][1] == rank) for s in ss])
 
 def is_all_different_suits(*ss):
     suits = [s[0][0] for s in ss]
@@ -382,6 +386,8 @@ def get_double_pung(sit):
     """
     >>> get_double_pung( get_one_option('m b1b1b1 m c1c1c1 h b3b4b5b6b8b9b9 w b7 f F3F5F6') )
     ('Double Pung', [[0, 1]])
+    >>> get_double_pung( get_one_option('m DwDwDw WwWwWw h c6c7d8d8d9d9d9 w c8 rw Ww sw Ww') )
+    ('Double Pung', [])
     """
     sets = get_only_sets(sit['sets'])
     poss = find_combinations(sets, 2, is_same_rank_pungs)
@@ -389,6 +395,9 @@ def get_double_pung(sit):
 
 def get_two_concealed_pungs(sit):
     """
+    >>> get_one_option('h b1b1b1c1c1c1b3b4b5b6b8b9b9 w b7 f F3F5F6')['sets']
+    [('h', ('b1', 'b1', 'b1')), ('h', ('b3', 'b4', 'b5')), ('h', ('b6', 'b7', 'b8')), ('h', ('b9', 'b9')), ('h', ('c1', 'c1', 'c1'))]
+
     >>> get_two_concealed_pungs( get_one_option('h b1b1b1c1c1c1b3b4b5b6b8b9b9 w b7 f F3F5F6') )
     ('Two Concealed Pungs', [[0, 4]])
     """

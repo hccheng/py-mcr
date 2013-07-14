@@ -14,7 +14,7 @@ implied = \
  'All Terminals and Honors': ['Pung of Terminals or Honors',
                               'All Pungs',
                               'Outside Hand'],
- 'All Types': ['Pung of Terminals or Honors'],
+ 'All Types': [],
  'Big Four Winds': ['Big Three Winds',
                     'Pung of Terminals or Honors',
                     'Seat Wind',

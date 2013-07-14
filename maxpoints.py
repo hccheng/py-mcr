@@ -74,12 +74,22 @@ def make_one_fan_per_line(fans):
     return point_fans
 
 def get_implied(name, sets_used, scoring_elements):
+    """
+    >>> get_implied("Quadruple Chow", [1, 2, 3, 4], [(48, 'Quadruple Chow', [1, 2, 3, 4]), (24, 'Pure Triple Chow', [2, 3, 4]), (24, 'Pure Triple Chow', [1, 3, 4]), (24, 'Pure Triple Chow', [1, 2, 4]), (24, 'Pure Triple Chow', [1, 2, 3]), (6, 'Half Flush', [0, 1, 2, 3, 4]), (4, 'Outside Hand', [0, 1, 2, 3, 4]), (2, 'Tile Hog', ['b3']), (2, 'Tile Hog', ['b2']), (2, 'Tile Hog', ['b1']), (2, 'Concealed Hand', [0, 1, 2, 3, 4]), (1, 'Single Wait', [True]), (1, 'Pure Double Chow', [3, 4]), (1, 'Pure Double Chow', [2, 4]), (1, 'Pure Double Chow', [2, 3]), (1, 'Pure Double Chow', [1, 4]), (1, 'Pure Double Chow', [1, 3]), (1, 'Pure Double Chow', [1, 2])])
+    [1, 2, 3, 4, 7, 8, 9, 12, 13, 14, 15, 16, 17]
+    """
+
     implied = []
     implied_names = get_implied_map()[name]
     for i, (p, checked_name, checked_sets) in enumerate(scoring_elements):
         if checked_name in implied_names:
             if set(checked_sets).issubset(set(sets_used)):
                 implied.append(i)
+            elif checked_name == "Tile Hog":
+                # Only Quadruple Chow implies Tile Hog, and it includes 12 of the 14 tiles, so there
+                # cannot be any Tile Hogs in the hand. 
+                implied.append(i)
+                
     return implied
 
 def get_identical(name, sets_used, scoring_elements):
@@ -99,8 +109,12 @@ def get_exceptional_exclusions(name, sets_used, scoring_elements):
         # Not needed, since the waits are defined like waiting for a pair, or tile in chow
         #if name == "Thirteen Orphans" and checked_name == "Single Wait":
         #    excluded.append(i)        
+
+        # Waits excludes each other
         if name in waits and checked_name in waits and name != checked_name: 
             excluded.append(i)        
+
+        # Seven pairs does not combine with any wait
         if name in does_not_combine_with_waits and checked_name in waits:
             excluded.append(i)
     return excluded
@@ -155,7 +169,7 @@ def max_points(sit):
     8
 
     Examples from "Beyond the Green Book"
-    >>> max_points(parse_command_line('h 123123b123123bWe w We')) # Quadrople chows should imply tile hogs
+    >>> max_points(parse_command_line('h 123123b123123bWe w We')) # Quadruple chows should imply tile hogs
     61
     >>> #If a combination of two scoring elements implies a third, that one is still claimable
     >>> max_points(parse_command_line('m 888b 234b h 234b666b2b w 2b'))
@@ -183,6 +197,22 @@ def max_points(sit):
     Outside Hand can include kongs. (Lasker 2009-10-18)
     >>> max_points(parse_command_line('h b789 c9 m DwDwDw DrDrDrDr WsWsWs w c9')) 
     14
+
+    West Wind and White Dragon does not have the same tile value, pungs of them will not be
+    a Double Pung. (Lasker 2009-10-18)
+    >>> max_points(parse_command_line('m DwDwDw WwWwWw h d999 d88 c67 w c8 rw Ww sw Ww')) 
+    8
+
+    Quadruple chows should imply tile hogs (From Beyond the Green Book)
+    >>> max_points(parse_command_line('h 123123123123bWe w We')) 
+    61
+
+    All Types should not block all Pung of Terminals or Honors. (Dick-mt, 2012-12-24)
+    >>> max_points(parse_command_line('v Dgg m c999 Wnnn h b666 d999 Dg w Dg')) 
+    20
+
+
+    Not fixed yet:
 
     The pung of the winning tile does not count for concealed pungs. (Lasker 2009-10-18)
     >>> max_points(parse_command_line('m c78c9 h b333 c555 d88 DwDw w d8')) 
