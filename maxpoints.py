@@ -154,6 +154,10 @@ def max_points(sit):
     52
     >>> max_points(parse_command_line('m 234b h 567b345678c3d w d3 self_draw')) # Hand 11
     8
+
+    >>> max_points(parse_command_line('m 345d 444b 978c h 3d4d DrDr w d2')) # Chicken hand
+    8
+
     >>> max_points(parse_command_line('h 123123b123123bWe w We')) # Quadrople chows should imply tile hogs
     61
     >>> #If a combination of two scoring elements implies a third, that one is still claimable
@@ -170,7 +174,7 @@ def max_points(sit):
     >>> #Reversable does not combine with One Voided, even though it is not implied by def. 
     >>> max_points(parse_command_line('m 222b h 456b12345d99d w 3d'))
     9
-    Obs! Reversible should not imply One Voided, it should be an exception
+    NB! Reversible should not imply One Voided, it should be an exception
     >>> #Har kommit till 3.5 i Beyond the Green Book
 """
 
