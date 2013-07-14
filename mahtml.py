@@ -86,34 +86,43 @@ def getOptionFragment(i, option):
     this_fragment += PRE("Total points: %d" % score_of_claimed(exclusion_fans, claimed_fans) )
     return this_fragment
 
-def makeTileString(sets,winning_tile,hand_sets):
+ENTIRE_HAND = "ENTIRE_HAND"
+
+def tileStringContents(sets, winning_tile, hand_sets):
     """
-    >>> print makeTileString([2],'b7',[('m', ('b1', 'b2', 'b3')), ('m', ('b4', 'b5', 'b6')), ('c', ('b9', 'b9', 'b9', 'b9')), ('h', ('b1', 'b1')), ('h', ('b5', 'b6', 'b7'))])
-    <img src="images/b9.png" alt=":b9: " height="50" title="b9" width="36"><img src="images/b9.png" alt=":b9: " height="50" title="b9" width="36"><img src="images/b9.png" alt=":b9: " height="50" title="b9" width="36"><img src="images/b9.png" alt=":b9: " height="50" title="b9" width="36">
-    >>> print makeTileString([0,1,2,3,4],'b7',[('m', ('b1', 'b2', 'b3')), ('m', ('b4', 'b5', 'b6')), ('c', ('b9', 'b9', 'b9', 'b9')), ('h', ('b1', 'b1')), ('h', ('b5', 'b6', 'b7'))])
-    Entire hand
-    >>> print makeTileString([True],'b7',[('m', ('b1', 'b2', 'b3')), ('m', ('b4', 'b5', 'b6')), ('c', ('b9', 'b9', 'b9', 'b9')), ('h', ('b1', 'b1')), ('h', ('b5', 'b6', 'b7'))])
-    <img src="images/b7.png" alt=":b7: " height="50" title="b7" width="36">
-    >>> print makeTileString([0,1],'b7',[('m', ('b1', 'b2', 'b3')), ('m', ('b4', 'b5', 'b6')), ('c', ('b9', 'b9', 'b9', 'b9')), ('h', ('b1', 'b1')), ('h', ('b5', 'b6', 'b7'))])
-    <img src="images/b1.png" alt=":b1: " height="50" title="b1" width="36"><img src="images/b2.png" alt=":b2: " height="50" title="b2" width="36"><img src="images/b3.png" alt=":b3: " height="50" title="b3" width="36"> <img src="images/b4.png" alt=":b4: " height="50" title="b4" width="36"><img src="images/b5.png" alt=":b5: " height="50" title="b5" width="36"><img src="images/b6.png" alt=":b6: " height="50" title="b6" width="36">
-    >>> print makeTileString(['F6'],'b7',[('m', ('b1', 'b2', 'b3')), ('m', ('b4', 'b5', 'b6')), ('c', ('b9', 'b9', 'b9', 'b9')), ('h', ('b1', 'b1')), ('h', ('b5', 'b6', 'b7'))])
-    <img src="images/F6.png" alt=":F6: " height="50" title="F6" width="36">
+    >>> print tileStringContents([2],'b7',[('m', ('b1', 'b2', 'b3')), ('m', ('b4', 'b5', 'b6')), ('c', ('b9', 'b9', 'b9', 'b9')), ('h', ('b1', 'b1')), ('h', ('b5', 'b6', 'b7'))])
+    [('b9', 'b9', 'b9', 'b9')]
+    >>> print tileStringContents([0,1,2,3,4],'b7',[('m', ('b1', 'b2', 'b3')), ('m', ('b4', 'b5', 'b6')), ('c', ('b9', 'b9', 'b9', 'b9')), ('h', ('b1', 'b1')), ('h', ('b5', 'b6', 'b7'))])
+    ENTIRE_HAND
+    >>> print tileStringContents([True],'b7',[('m', ('b1', 'b2', 'b3')), ('m', ('b4', 'b5', 'b6')), ('c', ('b9', 'b9', 'b9', 'b9')), ('h', ('b1', 'b1')), ('h', ('b5', 'b6', 'b7'))])
+    [('b7',)]
+    >>> print tileStringContents([0,1],'b7',[('m', ('b1', 'b2', 'b3')), ('m', ('b4', 'b5', 'b6')), ('c', ('b9', 'b9', 'b9', 'b9')), ('h', ('b1', 'b1')), ('h', ('b5', 'b6', 'b7'))])
+    [('b1', 'b2', 'b3'), ('b4', 'b5', 'b6')]
+    >>> print tileStringContents(['F6'],'b7',[('m', ('b1', 'b2', 'b3')), ('m', ('b4', 'b5', 'b6')), ('c', ('b9', 'b9', 'b9', 'b9')), ('h', ('b1', 'b1')), ('h', ('b5', 'b6', 'b7'))])
+    [('F6',)]
     """
     if len(sets) == 1 and type(sets[0]) == str:
             # A single tile (Flower case)
-            tile_string = getTileImages([sets[0]])
+            contents = [(sets[0], )]
     elif len(sets) == 1 and type(sets[0]) == bool:
             # A boolean like for single wait
-            tile_string = getTileImages([winning_tile])
+            contents = [(winning_tile, )]
     elif len(sets) >= 5:
-        tile_string = 'Entire hand'
+        contents = ENTIRE_HAND
     else:
         tiles = []
         for s in sets:
             set_type, set_tiles = hand_sets[s]
             tiles.append(set_tiles)
-        tile_string = Sum([getTileImages(ts) for ts in tiles], TEXT(" "))
-    return tile_string
+        contents = tiles
+    return contents
+
+def makeTileString(sets,winning_tile,hand_sets):
+    contents = tileStringContents(sets, winning_tile, hand_sets)
+    if contents == ENTIRE_HAND:
+      return 'Entire hand'
+    else:
+      return Sum([getTileImages(ts) for ts in contents], TEXT(" "))
 
 def getMaximumPointFragment(option):
     fans = get_fans(option)
