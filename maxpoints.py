@@ -184,6 +184,10 @@ def max_points(sit):
     >>> max_points(parse_command_line('h b789 c9 m DwDwDw DrDrDrDr WsWsWs w c9')) 
     14
 
+    The pung of the winning tile does not count for concealed pungs. (Lasker 2009-10-18)
+    >>> max_points(parse_command_line('m c78c9 h b333 c555 d88 DwDw w d8')) 
+    2
+
 """
 
     options = get_options(sit)
